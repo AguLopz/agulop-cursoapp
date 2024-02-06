@@ -1,31 +1,100 @@
+import { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, Image, View, TextInput, TouchableOpacity } from 'react-native';
+import { Text,
+  View,
+  Image,
+  TextInput,
+  StyleSheet,
+  Pressable,
+  FlatList,} from 'react-native';
+  import RemoveModal from "./src/components/RemoveModal";
+  const DATA = [
+    {
+      name: "verduras",
+      id: 1,
+    },
+    {
+      name: "carnes rojas",
+      id: 2,
+    },
+    {
+      name: "Pollo",
+      id: 3,
+    },
+  ];
+  
 
 export default function App() {
+
+  const [inputValue, setInputValue] = useState("");
+  const [cartItems, setCartItems] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [itemSelected, setItemSelected] = useState(null);
+  const handleInputChange = (value) => setInputValue(value);
+
+  const handleModal = (id) => {
+    setModalVisible(true);
+    setItemSelected(id);
+    console.log(id);
+  };
+
+  const addItem = () => {
+    const newItem = {
+      name: inputValue,
+      id: new Date().getTime(),
+    };
+    setCartItems([...cartItems, newItem]);
+  };
+
+
   return (
-    <><View style={styles.title} >
-      <Text>La app del Asado</Text>
+    <View style={styles.container}>
+    
+    <StatusBar style="auto" />
+
+    
+    <RemoveModal
+      modalVisible={modalVisible}
+      cartItems={cartItems}
+      setCartItems={setCartItems}
+      setModalVisible={setModalVisible}
+      itemSelected={itemSelected}
+    />
+    <View style={styles.header}>
+      <Text>CARRITO</Text>
+      
+
+      <Image style={styles.image} source={cartLogo} />
     </View>
-    <View style={styles.cart}>
-      <Text>Carrito</Text>
-      <Image style={{width: 50, height: 50}} source={{uri: "https://t3.ftcdn.net/jpg/03/14/85/06/360_F_314850659_2aQLerz30kWj78tqpaGSbzYD6sAUmuDf.jpg" }} />    
-    </View>
-    <View style={styles.box}>
-      <TextInput style={styles.textInput}
-      placeholder='Ingrese Un producto'/>
-     <TouchableOpacity>
-          <Text style={{ fontSize: 40, paddingLeft: 15, }}>+</Text>
-        </TouchableOpacity>
+    <View style={styles.inputContainer}>
+      <TextInput
+        onChangeText={handleInputChange}
+        value={inputValue}
+        style={styles.input}
+        placeholder="Ingrese un producto"
+      />
+      <Pressable onPress={addItem}>
+        <Text style={{ fontSize: 40 }}>+</Text>
+      </Pressable>
     </View>
     <View style={styles.productList}>
-        <Text>Carrito</Text>
-        <Text>Chinchulines</Text>
-        <Text>Asado tira fina</Text>
-        <Text>Chorizo</Text>
-        <Text>Morcilla Salada</Text>
-        <StatusBar style="auto" />
-      </View></>
-  );
+      
+
+      <FlatList
+        data={cartItems}
+        renderItem={({ item }) => (
+          <View style={{ width: 400, flexDirection: "row" }}>
+            <Text style={styles.product}>{item.name}</Text>
+            <Pressable onPress={() => handleModal(item.id)}>
+              <Text style={{ fontSize: 20 }}>🚮</Text>
+            </Pressable>
+          </View>
+        )}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
+  </View>
+);
 }
 
 const styles = StyleSheet.create({
@@ -75,4 +144,4 @@ const styles = StyleSheet.create({
     padding: 20,
   }
 });
-gir
+
