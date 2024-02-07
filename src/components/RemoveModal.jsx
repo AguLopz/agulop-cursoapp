@@ -16,12 +16,12 @@ const RemoveModal = ({
   return (
     <Modal animationType="slide" transparent visible={modalVisible}>
       <View style={styles.modalContainer}>
-        <Text>Quieres eliminar el producto?</Text>
+        <Text>Eliminar Ejercicio?</Text>
         <Pressable onPress={() => setModalVisible(false)}>
-          <Text>No</Text>
+          <Text>❌</Text>
         </Pressable>
         <Pressable onPress={removeItem}>
-          <Text>Sí</Text>
+          <Text>✅</Text>
         </Pressable>
       </View>
     </Modal>

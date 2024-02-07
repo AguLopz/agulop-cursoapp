@@ -29,7 +29,7 @@ const DATA = [
 ];
 
 export default function App() {
-  // useState y useEffect hooks para controlar el estado de la aplicación y el ciclo de vida de un componente
+ 
   const [counter, setCounter] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const [cartItems, setCartItems] = useState([]);
@@ -46,7 +46,7 @@ export default function App() {
     console.log(id);
   };
 
-  //console.log('Hubo un error en el servidor (no es mi culpa)');
+
 
   const addItem = () => {
     const newItem = {
@@ -58,10 +58,10 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {/* El StatusBar controla la barra de estado del dispositivo */}
+      
       <StatusBar style="auto" />
 
-      {/* Llamamos al modal para eliminar el producto y le pasamos por props toda la data que necesita */}
+      
       <RemoveModal
         modalVisible={modalVisible}
         cartItems={cartItems}
@@ -70,9 +70,8 @@ export default function App() {
         itemSelected={itemSelected}
       />
       <View style={styles.header}>
-        <Text>CARRITO</Text>
-        {/* <Image style={{width: 50, height: 50}} source={{uri: "https://t3.ftcdn.net/jpg/05/60/17/66/360_F_560176615_cUua21qgzxDiLiiyiVGYjUnLSGnVLIi6.jpg"}}/> */}
-
+        <Text>App para el GYM</Text>
+        
         <Image style={styles.image} source={cartLogo} />
       </View>
       <View style={styles.inputContainer}>
@@ -80,26 +79,22 @@ export default function App() {
           onChangeText={handleInputChange}
           value={inputValue}
           style={styles.input}
-          placeholder="Ingrese un producto"
+          placeholder="Ejercicio y Repes"
         />
         <Pressable onPress={addItem}>
           <Text style={{ fontSize: 40 }}>+</Text>
         </Pressable>
       </View>
       <View style={styles.productList}>
-        {/* {DATA.map((item) => (
-          <View key={item.id}>
-            <Text style={styles.product}>{item.name}</Text>
-          </View>
-        ))} */}
+        
 
         <FlatList
           data={cartItems}
           renderItem={({ item }) => (
-            <View style={{ width: 400, flexDirection: "row" }}>
+            <View style={styles.productList}>
               <Text style={styles.product}>{item.name}</Text>
               <Pressable onPress={() => handleModal(item.id)}>
-                <Text style={{ fontSize: 20 }}>🚮</Text>
+                <Text style={{ fontSize: 20 }}>❌</Text>
               </Pressable>
             </View>
           )}
@@ -116,6 +111,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 14,
     paddingTop: Constants.statusBarHeight,
+    alignItems: "center",
   },
   modalContainer: {
     height: 200,
@@ -140,20 +136,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     width: 50,
     height: 50,
   },
   productList: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 10,
+    width: 400, flexDirection: "row", justifyContent: "center" 
   },
   product: {
-    fontSize: 16,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: 20,
     fontWeight: "bold",
     padding: 4,
+
+
   },
   input: {
+    alignItems: "center",
     borderColor: "gray",
     borderWidth: 1,
     paddingVertical: 10,
@@ -163,4 +166,3 @@ const styles = StyleSheet.create({
   },
   inputContainer: { flexDirection: "row" },
 });
-
